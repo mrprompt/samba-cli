@@ -22,7 +22,7 @@
 		"symfony/console": "dev-master",
 		"symfony/finder": "2.2.*",
         "symfony/dom-crawler": "2.2.*",
-        "shuber/curl" : "master-dev",
+        "symfony/http-foundation": "2.3.*@dev",
 		"php" : ">=5.3"
 	},
 	"autoload" : {
