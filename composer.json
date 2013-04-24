@@ -1,0 +1,33 @@
+{
+	"name" : "mrprompt/sambaderaizdownloader",
+	"description" : "download de álbums do site Samba de Raiz",
+	"type" : "client",
+	"authors" : [{
+			"name" : "Thiago Paes",
+			"email" : "mrprompt@gmail.com",
+			"homepage" : "http://about.me/mrprompt",
+			"role" : "Developer"
+		}
+	],
+	"keywords" : [
+		"samba",
+		"mp3",
+		"download",
+		"client"
+	],
+	"license" : [
+		"MIT"
+	],
+	"require" : {
+		"symfony/console": "dev-master",
+		"symfony/finder": "2.2.*",
+        "symfony/dom-crawler": "2.2.*",
+        "shuber/curl" : "master-dev",
+		"php" : ">=5.3"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"mrprompt" : "src"
+		}
+	}
+}
