@@ -21,8 +21,11 @@
 	"require" : {
 		"symfony/console": "dev-master",
 		"symfony/finder": "2.2.*",
-        "symfony/dom-crawler": "2.2.*",
-        "symfony/http-foundation": "2.3.*@dev",
+                "symfony/dom-crawler": "2.2.*",
+                "symfony/http-foundation": "2.3.*@dev",
+                "uecode/daemon": "dev-master",
+                "camcima/twilio-php": "dev-master",
+                "aws/aws-sdk-php": "2.*",
 		"php" : ">=5.3"
 	},
 	"autoload" : {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<application>
+    <services>
+        <service name="Amazon">
+            <key>AKIAJEUVKL65UVZC4RCA</key>
+            <secret>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</secret>
+        </service>
+        <service name="AmazonSes">
+            <host>email-smtp.us-east-1.amazonaws.com</host>
+            <port>587</port>
+            <tls>true</tls>
+            <iam>mrprompt</iam>
+            <user>AKIAIGVHI43DVP6AWZCA</user>
+            <password>Alz9zu/tEeOwWt4RSCuST25YR5/AhDQT3VsfxHBBszIw</password>
+        </service>
+        <service name="Twilio">
+            <key>AC7efc6208b4b5b2298a4ae4b6bc313ac8</key>
+            <secret>9329d6f505941cf9875f407dd10bde5b</secret>
+        </service>
+    </services>
+</application>
