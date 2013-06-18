@@ -7,31 +7,14 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false">
+         syntaxCheck="false"
+         bootstrap="../vendor/autoload.php">
     
     <testsuites>
         <testsuite name="APP Test Suite">
-            <php>
-              <env name="APPLICATION_ENV" value="testing"/>
-              <const name="APPLICATION_ENV" value="testing"/>
-            </php>            
-            <directory>.</directory>
+            <directory>./app</directory>
         </testsuite>
     </testsuites>
-
-    <!-- <filter>
-        <whitelist>
-            <directory suffix=".php">./</directory>
-            <directory suffix=".php">./</directory>
-        </whitelist>
-
-        <blacklist>
-            <directory suffix=".php">./vendor/</directory>
-            <exclude>
-                <directory suffix=".php">./vendor/</directory>
-            </exclude>
-        </blacklist>
-    </filter> -->
 
     <!-- Code Coverage Configuration -->
     <logging>
