@@ -1,9 +1,0 @@
-Samba\Busca
- [x] Busca por algo
-
-Samba\Download
- [x] Busca por algo
-
-Samba\Recentes
- [x] Lista recentes
-
