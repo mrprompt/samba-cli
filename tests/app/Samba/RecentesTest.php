@@ -40,12 +40,8 @@ class RecentesTest extends \PHPUnit_Framework_TestCase
 
         $command       = $application->find('samba:recentes');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(
-            array(
-                'command'       => $command->getName(), 
-            )
-        );
+        $commandTester->execute(array('command' => $command->getName()));
 
-        $this->assertRegExp('/.+/', $commandTester->getDisplay());
+        $this->assertRegExp('/^([[:alnum:]]).+/', $commandTester->getDisplay());
     }
 }

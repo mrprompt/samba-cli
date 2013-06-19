@@ -31,9 +31,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Recentes extends Command
 {
     /**
-     * @const string
+     * @uses Traits\WebClient
      */
-	const BASE = 'http://www.sambaderaiz.net';
+    use \Traits\WebClient;
+    
+    /**
+     * @var string
+     */
+    private $uri = '/feed/';
 	
     /**
      * Construtor
@@ -55,8 +60,16 @@ class Recentes extends Command
      */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$text     = 'boo';
+        $rss = \Feed::loadRss($this->base . $this->uri);
         
-		$output->writeln(sprintf('<info>%s</info>', $text));
+        foreach ($rss->item as $item) {
+            $msg = sprintf(
+                '<info>%s</info> - <comment>%s</comment>',
+                $item->title,
+                substr(str_replace($this->base, '', $item->link), 1, -1)
+            );
+
+            $output->writeln($msg);
+        }
 	}
 }
