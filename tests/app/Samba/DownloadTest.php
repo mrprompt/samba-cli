@@ -45,11 +45,25 @@ class DownloadTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
+     * Álbuns válidos para baixar
+     * 
+     * @return array
+     */
+    public function tiposInvalidos()
+    {
+        return array(
+            array('arlindo-cruz-batuques-e-romances-2011', 'mp5'),
+            array('cartola-verde-que-te-quero-rosa-1977', 'zzz'),
+            array('adoniran-barbosa-adoniran-barbosa-e-convidados', 'seilá'),
+        );
+    }
+    
+    /**
      * @test
      * @dataProvider albuns
      * @param string $palavra 
      */
-    public function buscaPorAlgo($album)
+    public function baixarAlbum($album)
     {
         $application = new Application;
         $application->add(new Download);
@@ -60,6 +74,31 @@ class DownloadTest extends \PHPUnit_Framework_TestCase
             array(
                 'command'   => $command->getName(), 
                 'album'     => $album
+            )
+        );
+
+        $this->assertRegExp('/.+/', $commandTester->getDisplay());
+    }
+    
+    /**
+     * @test
+     * @dataProvider tiposInvalidos
+     * @param string $palavra 
+     * @expectedException \InvalidArgumentException
+     */
+    public function albumComtipoInvalido($album, $tipoInvalido)
+    {
+        $application = new Application;
+        $application->add(new Download);
+
+        $command       = $application->find('samba:download');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(
+            array(
+                'command'   => $command->getName(), 
+                'album'     => $album,
+                'destino'   => '/tmp',
+                'tipo'      => $tipoInvalido
             )
         );
 
