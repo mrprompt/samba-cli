@@ -81,6 +81,7 @@ class Download extends Command
 	}
     
     /**
+     * Recupera o índice correto do tipo de arquivo para download.
      * 
      * @param string $tipo
      * @return integer
@@ -103,6 +104,7 @@ class Download extends Command
     }
     
     /**
+     * Abre a página referente a um album.
      * 
      * @param string $album
      * @return string
@@ -120,6 +122,7 @@ class Download extends Command
     }
     
     /**
+     * Recupera a lista de músicas de um álbum.
      * 
      * @param string $album
      * @return \DOMNodeList 
