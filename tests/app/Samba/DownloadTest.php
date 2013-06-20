@@ -35,12 +35,10 @@ class DownloadTest extends \PHPUnit_Framework_TestCase
      * 
      * @return array
      */
-    public function albuns()
+    public function albumValido()
     {
         return array(
             array('arlindo-cruz-batuques-e-romances-2011'),
-            array('cartola-verde-que-te-quero-rosa-1977'),
-            array('adoniran-barbosa-adoniran-barbosa-e-convidados'),
         );
     }
     
@@ -49,18 +47,32 @@ class DownloadTest extends \PHPUnit_Framework_TestCase
      * 
      * @return array
      */
-    public function tiposInvalidos()
+    public function albumValidoTipoInvalido()
     {
         return array(
             array('arlindo-cruz-batuques-e-romances-2011', 'mp5'),
-            array('cartola-verde-que-te-quero-rosa-1977', 'zzz'),
-            array('adoniran-barbosa-adoniran-barbosa-e-convidados', 'seilá'),
+        );
+    }
+    
+    /**
+     * Álbuns válidos para baixar
+     * 
+     * @return array
+     */
+    public function albumValidoTipoDestino()
+    {
+        return array(
+            array(
+                'arlindo-cruz-batuques-e-romances-2011', 
+                'mp3', 
+                sys_get_temp_dir()
+            ),
         );
     }
     
     /**
      * @test
-     * @dataProvider albuns
+     * @dataProvider albumValido
      * @param string $palavra 
      */
     public function baixarAlbum($album)
@@ -82,7 +94,7 @@ class DownloadTest extends \PHPUnit_Framework_TestCase
     
     /**
      * @test
-     * @dataProvider tiposInvalidos
+     * @dataProvider albumValidoTipoInvalido
      * @param string $palavra 
      * @expectedException \InvalidArgumentException
      */
@@ -94,7 +106,7 @@ class DownloadTest extends \PHPUnit_Framework_TestCase
         $command       = $application->find('samba:download');
         $commandTester = new CommandTester($command);
         $commandTester->execute(
-            array(
+            array(  
                 'command'   => $command->getName(), 
                 'album'     => $album,
                 'destino'   => '/tmp',
@@ -103,5 +115,32 @@ class DownloadTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertRegExp('/.+/', $commandTester->getDisplay());
+    }
+    
+    /**
+     * @test
+     * @dataProvider albumValidoTipoDestino
+     * @param string $album
+     * @param string $tipo
+     * @param string $destino
+     */
+    public function verificaCriacaoDiretorioDestino($album, $tipo, $destino)
+    {
+        $application = new Application;
+        $application->add(new Download);
+
+        $command       = $application->find('samba:download');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(
+            array(
+                'command'   => $command->getName(), 
+                'album'     => $album,
+                'destino'   => $destino,
+                'tipo'      => $tipo
+            )
+        );
+
+        $this->assertRegExp('/.+/', $commandTester->getDisplay());
+        $this->assertTrue(is_dir($destino . DIRECTORY_SEPARATOR . $album));
     }
 }

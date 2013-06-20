@@ -28,6 +28,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @uses Guzzle\Http\Client
+ */
+use Guzzle\Http\Client;
+
+/**
  * Search album
  * 
  * @author Thiago Paes <mrprompt@gmail.com>
@@ -35,6 +40,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Busca extends Command
 {
+    /**
+     * @uses Traits\WebClient
+     */
+    use \Traits\WebClient;
+    
     /**
      * Construtor
      * 
@@ -56,9 +66,38 @@ class Busca extends Command
      */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$albumUrl = $input->getArgument('palavra-chave');
-        $text     = 'boo';
+        $palavra = urlencode($input->getArgument('palavra-chave'));
         
-		$output->writeln(sprintf('<info>%s</info>', $text));
+        $url    = 'https://www.googleapis.com';
+        $params = '/customsearch/v1element?'
+             . 'key=AIzaSyCVAXiUzRYsML1Pv6RwSG1gunmMikTzQqY&'
+             . 'rsz=filtered_cse&num=10&'
+             . 'hl=en&'
+             . 'source=gcsc&'
+             . 'gss=.com&sig=5530b85faafd53e1d394092d8d1eb26a&'
+             . 'cx=015489500250162257153:prhblavs8na&'
+             . 'q=' . $palavra . '&googlehost=www.google.com&'
+             . 'oq=' . $palavra . '&'
+             . 'nocache=1371703833885&'
+             . '&alt=json';
+        
+        try {
+            $client   = new Client($url);
+            $request  = $client->get($params);
+            $response = $request->send();
+            $results  = json_decode($response->getBody());
+            
+            foreach ($results->results as $result) {
+                $msg = sprintf(
+                    '<info>%s</info> - <comment>%s</comment>',
+                    $result->titleNoFormatting,
+                    substr(str_replace($this->base, '', $result->unescapedUrl), 1, -1)
+                );
+                
+                $output->writeln($msg);
+            }
+        } catch (\Guzzle\Http\Exception\ClientErrorResponseException $e) {
+            $output->writeln("<error>{$e->getMessage()}</error>");
+        }
 	}
 }

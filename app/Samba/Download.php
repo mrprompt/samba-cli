@@ -197,7 +197,7 @@ class Download extends Command
             $response = $request->send();
             
             file_put_contents(
-                $destino . DS . $arquivo, 
+                $destino . DIRECTORY_SEPARATOR . $arquivo, 
                 $response->getBody(),
                 LOCK_EX
             );
